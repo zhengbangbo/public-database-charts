@@ -27,6 +27,16 @@ const { data: vue3Data } = await useFetch('/api/database?q=vue3')
 const { data: vue2Data } = await useFetch('/api/database?q=vue2')
 const { data: reactData } = await useFetch('/api/database?q=react')
 
+function lastEditedTime(data: any) {
+  const lastEditedTime = data.value.data[0].last_edited_time
+  const date = new Date(lastEditedTime)
+  return date.toLocaleString().replace(/:\d{1,2}$/, ' ')
+}
+
+const vue3LastEditedTime = lastEditedTime(vue3Data)
+const vue2LastEditedTime = lastEditedTime(vue2Data)
+const reactLastEditedTime = lastEditedTime(reactData)
+
 function useSource(data: any) {
   return data.value.data.map((item: any) => {
     return {
@@ -59,7 +69,7 @@ function useOption(source: any) {
       type: 'category',
       axisLabel: {
         interval: 0,
-        rotate: 20,
+        rotate: 10,
         align: 'center',
         margin: 20,
         hideOverlap: true,
@@ -95,10 +105,16 @@ const reactOption = useOption(reactSource)
   <div m1 text-lg fw300 op30>
     Visualization for Public Database
   </div>
+  Do you want to add a new component library to the chart or report an error? <a text-blue op40 href="https://github.com/zhengbangbo/public-database-charts/discussions/1" target="_blank">Please let me know.</a>
   <MyChart :option="vue3Option">
     <template #title>
       <div id="vue3" m-4 text-2xl>
         Weekly Download Count for <span from-rose-400 to-indigo-500 via-fuchsia-500 bg-gradient-to-r bg-clip-text text-transparent>Vue3</span> Component Library
+      </div>
+    </template>
+    <template #last-edited-time>
+      <div m-4 text-sm fw300 op30>
+        Last Updated: {{ vue3LastEditedTime }}
       </div>
     </template>
   </MyChart>
@@ -108,11 +124,21 @@ const reactOption = useOption(reactSource)
         Weekly Download Count for <span from-rose-400 to-indigo-500 via-fuchsia-500 bg-gradient-to-r bg-clip-text text-transparent>Vue2</span> Component Library
       </div>
     </template>
+    <template #last-edited-time>
+      <div m-4 text-sm fw300 op30>
+        Last Updated: {{ vue2LastEditedTime }}
+      </div>
+    </template>
   </MyChart>
   <MyChart :option="reactOption">
     <template #title>
       <div id="react" m-4 text-2xl>
         Weekly Download Count for <span from-rose-400 to-indigo-500 via-fuchsia-500 bg-gradient-to-r bg-clip-text text-transparent>React</span> Component Library
+      </div>
+    </template>
+    <template #last-edited-time>
+      <div m-4 text-sm fw300 op30>
+        Last Updated: {{ reactLastEditedTime }}
       </div>
     </template>
   </MyChart>

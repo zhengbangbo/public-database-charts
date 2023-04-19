@@ -9,6 +9,7 @@ const { option } = defineProps<{ option: any }>()
     <figure b="soild op-10 rd-3" border shadow-xl lg:w-900px md:w-700px sm:w-full>
       <slot name="title" />
       <VChart class="chart" :option="option" autoresize m-auto h-160 w-full />
+      <slot name="last-edited-time" />
     </figure>
   </section>
 </template>
