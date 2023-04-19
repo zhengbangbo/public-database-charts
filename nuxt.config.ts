@@ -62,6 +62,6 @@ export default defineNuxtConfig({
   },
 
   build: {
-    transpile: [/echarts/, /zrender/],
+    transpile: [/echarts/, /zrender/, /resize-detector/],
   },
 })
