@@ -59,9 +59,10 @@ function useOption(source: any) {
       type: 'category',
       axisLabel: {
         interval: 0,
-        rotate: 10,
+        rotate: 20,
         align: 'center',
         margin: 20,
+        hideOverlap: true,
       },
     },
     yAxis: {
@@ -75,6 +76,10 @@ function useOption(source: any) {
         type: 'bar',
       },
     ],
+    grid: {
+      left: '70px',
+      right: '70px',
+    },
   })
 }
 

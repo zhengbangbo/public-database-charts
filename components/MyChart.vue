@@ -6,9 +6,9 @@ const { option } = defineProps<{ option: any }>()
 
 <template>
   <section mt-8 flex="~" justify-center>
-    <figure b="soild op-10 rd-3" w-60vw border shadow-xl>
+    <figure b="soild op-10 rd-3" border shadow-xl lg:w-900px md:w-700px sm:w-full>
       <slot name="title" />
-      <VChart class="chart" :option="option" m-auto h-180 w-full />
+      <VChart class="chart" :option="option" autoresize m-auto h-160 w-full />
     </figure>
   </section>
 </template>
