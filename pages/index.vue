@@ -9,7 +9,7 @@ import {
 import { BarChart } from 'echarts/charts'
 import { CanvasRenderer } from 'echarts/renderers'
 
-import VChart, { THEME_KEY } from 'vue-echarts'
+import { THEME_KEY } from 'vue-echarts'
 import { provide, ref } from 'vue'
 
 use([
@@ -27,131 +27,60 @@ const { data: vue3Data } = await useFetch('/api/database?q=vue3')
 const { data: vue2Data } = await useFetch('/api/database?q=vue2')
 const { data: reactData } = await useFetch('/api/database?q=react')
 
-const source = vue3Data.value?.data.map((item) => {
-  return {
-    package: item.properties?.Name.title[0].plain_text,
-    npm: item.properties['Npm Weekly Downloads'].number,
-    mirror: item.properties['NpmMirror Weekly Downloads'].number,
-  }
-})
-const vue2Source = vue2Data.value?.data.map((item) => {
-  return {
-    package: item.properties?.Name.title[0].plain_text,
-    npm: item.properties['Npm Weekly Downloads'].number,
-    mirror: item.properties['NpmMirror Weekly Downloads'].number,
-  }
-})
-const reactSource = reactData.value?.data.map((item) => {
-  return {
-    package: item.properties?.Name.title[0].plain_text,
-    npm: item.properties['Npm Weekly Downloads'].number,
-    mirror: item.properties['NpmMirror Weekly Downloads'].number,
-  }
-})
+function useSource(data: any) {
+  return data.value.data.map((item: any) => {
+    return {
+      package: item.properties?.Name.title[0].plain_text,
+      npm: item.properties['Npm Weekly Downloads'].number,
+      mirror: item.properties['NpmMirror Weekly Downloads'].number,
+    }
+  },
+  )
+}
 
-const option = ref({
-  legend: {},
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {
-      type: 'shadow',
-    },
-  },
-  dataset: {
-    dimensions: ['package', 'npm', 'mirror'],
-    source,
-  },
-  xAxis: {
-    type: 'category',
-    axisLabel: {
-      interval: 0,
-      rotate: 10,
-      align: 'center',
-      margin: 20,
-    },
-  },
-  yAxis: {
-    type: 'value',
-  },
-  series: [
-    {
-      type: 'bar',
-    },
-    {
-      type: 'bar',
-    },
-  ],
-})
+const vue3Source = useSource(vue3Data)
+const vue2Source = useSource(vue2Data)
+const reactSource = useSource(reactData)
 
-const vue2Option = ref({
-  legend: {},
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {
-      type: 'shadow',
+function useOption(source: any) {
+  return ref({
+    legend: {},
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow',
+      },
     },
-  },
-  dataset: {
-    dimensions: ['package', 'npm', 'mirror'],
-    source: vue2Source,
-  },
-  xAxis: {
-    type: 'category',
-    axisLabel: {
-      interval: 0,
-      rotate: 10,
-      align: 'center',
-      margin: 20,
+    dataset: {
+      dimensions: ['package', 'npm', 'mirror'],
+      source,
     },
-  },
-  yAxis: {
-    type: 'value',
-  },
-  series: [
-    {
-      type: 'bar',
+    xAxis: {
+      type: 'category',
+      axisLabel: {
+        interval: 0,
+        rotate: 10,
+        align: 'center',
+        margin: 20,
+      },
     },
-    {
-      type: 'bar',
+    yAxis: {
+      type: 'value',
     },
-  ],
+    series: [
+      {
+        type: 'bar',
+      },
+      {
+        type: 'bar',
+      },
+    ],
+  })
+}
 
-})
-
-const reactOption = ref({
-  legend: {},
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {
-      type: 'shadow',
-    },
-  },
-  dataset: {
-    dimensions: ['package', 'npm', 'mirror'],
-    source: reactSource,
-  },
-  xAxis: {
-    type: 'category',
-    axisLabel: {
-      interval: 0,
-      rotate: 10,
-      align: 'center',
-      margin: 20,
-    },
-  },
-  yAxis: {
-    type: 'value',
-  },
-  series: [
-    {
-      type: 'bar',
-    },
-    {
-      type: 'bar',
-    },
-  ],
-
-})
+const vue3Option = useOption(vue3Source)
+const vue2Option = useOption(vue2Source)
+const reactOption = useOption(reactSource)
 </script>
 
 <template>
@@ -161,34 +90,25 @@ const reactOption = ref({
   <div m1 text-lg fw300 op30>
     Visualization for Public Database
   </div>
-  <div id="vue3" mt-4>
-    <a href="#vue3" text-2xl>
-      Weekly Download Count for <span bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 bg-clip-text text-transparent>Vue3</span> Component Library
-    </a>
-  </div>
-  <section mt-1 flex="~" justify-center>
-    <figure b="soild op-10 rd-3" w-60vw border>
-      <VChart class="chart" :option="option" m-auto h-180 w-60vw />
-    </figure>
-  </section>
-  <div id="vue2" mt-4>
-    <a href="#vue2" text-2xl>
-      Weekly Download Count for <span bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 bg-clip-text text-transparent>Vue2</span> Component Library
-    </a>
-  </div>
-  <section mt-1 flex="~" justify-center>
-    <figure b="soild op-10 rd-3" w-60vw border>
-      <VChart class="chart" :option="vue2Option" m-auto h-180 w-60vw />
-    </figure>
-  </section>
-  <div id="react" mt-4>
-    <a href="#react" text-2xl>
-      Weekly Download Count for <span bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 bg-clip-text text-transparent>React</span> Component Library
-    </a>
-  </div>
-  <section mt-1 flex="~" justify-center>
-    <figure b="soild op-10 rd-3" w-60vw border>
-      <VChart class="chart" :option="reactOption" m-auto h-180 w-60vw />
-    </figure>
-  </section>
+  <MyChart :option="vue3Option">
+    <template #title>
+      <div id="vue3" m-4 text-2xl>
+        Weekly Download Count for <span from-rose-400 to-indigo-500 via-fuchsia-500 bg-gradient-to-r bg-clip-text text-transparent>Vue3</span> Component Library
+      </div>
+    </template>
+  </MyChart>
+  <MyChart :option="vue2Option">
+    <template #title>
+      <div id="vue2" m-4 text-2xl>
+        Weekly Download Count for <span from-rose-400 to-indigo-500 via-fuchsia-500 bg-gradient-to-r bg-clip-text text-transparent>Vue2</span> Component Library
+      </div>
+    </template>
+  </MyChart>
+  <MyChart :option="reactOption">
+    <template #title>
+      <div id="react" m-4 text-2xl>
+        Weekly Download Count for <span from-rose-400 to-indigo-500 via-fuchsia-500 bg-gradient-to-r bg-clip-text text-transparent>React</span> Component Library
+      </div>
+    </template>
+  </MyChart>
 </template>
