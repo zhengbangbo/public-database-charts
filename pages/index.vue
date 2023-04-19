@@ -1,23 +1,11 @@
 <script setup lang="ts">
-const online = useOnline()
 </script>
 
 <template>
-  <div>
-    <Logos mb-6 />
-    <Suspense>
-      <ClientOnly>
-        <PageView v-if="online" />
-        <div v-else text-gray:80>
-          You're offline
-        </div>
-      </ClientOnly>
-      <template #fallback>
-        <div italic op50>
-          <span animate-pulse>Loading...</span>
-        </div>
-      </template>
-    </Suspense>
-    <InputEntry />
+  <div text-4xl>
+    Public Database Charts
+  </div>
+  <div m1 text-lg fw300 op30>
+    Visualization for Public Database
   </div>
 </template>

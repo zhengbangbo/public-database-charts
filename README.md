@@ -1,6 +1,6 @@
 # Public Database Charts
 
-Visualization icons for Public Database.
+Visualization for Public Database.
 
 <pre align="center">
 🧪 Working in Progress
