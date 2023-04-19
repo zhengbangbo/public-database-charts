@@ -23,6 +23,16 @@ use([
 
 provide(THEME_KEY, 'light')
 
+const { data, pending, error, refresh } = await useFetch('/api/database')
+
+const source = data.value?.data.map((item) => {
+  return {
+    package: item.properties?.Name.title[0].plain_text,
+    npm: item.properties['Npm Weekly Downloads'].number,
+    mirror: item.properties['NpmMirror Weekly Downloads'].number,
+  }
+})
+
 const option = ref({
   legend: {},
   tooltip: {
@@ -33,19 +43,7 @@ const option = ref({
   },
   dataset: {
     dimensions: ['package', 'npm', 'mirror'],
-    source: [
-      { package: 'Element Plus', npm: 167436, mirror: 73544 },
-      { package: 'Vant', npm: 66964, mirror: 52394 },
-      { package: '@headlessui/vue', npm: 113172, mirror: 991 },
-      { package: 'quasar', npm: 111112, mirror: 2001 },
-      { package: 'primevue', npm: 81236, mirror: 449 },
-      { package: 'Naive UI', npm: 52297, mirror: 6939 },
-      { package: 'Vuestic UI', npm: 3715, mirror: 90 },
-      { package: 'View UI Plus', npm: 2520, mirror: 964 },
-      { package: 'Nut UI', npm: 2258, mirror: 1092 },
-      { package: 'TDesign Vue Next', npm: 1702, mirror: 1244 },
-      { package: 'Fighting Design', npm: 522, mirror: 34 },
-    ],
+    source,
   },
   xAxis: {
     type: 'category',
@@ -83,8 +81,8 @@ const option = ref({
     </a>
   </div>
   <section mt-1 flex="~" justify-center>
-    <figure border b="soild op-10 rd-3" w-60vw >
-      <VChart class="chart" :option="option" w-60vw m-auto h-180 />
+    <figure b="soild op-10 rd-3" w-60vw border>
+      <VChart class="chart" :option="option" m-auto h-180 w-60vw />
     </figure>
   </section>
 </template>
