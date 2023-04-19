@@ -161,9 +161,9 @@ const reactOption = ref({
   <div m1 text-lg fw300 op30>
     Visualization for Public Database
   </div>
-  <div id="vue3">
-    <a href="#vue3">
-      Weekly Download Count for Vue3 Component Library
+  <div id="vue3" mt-4>
+    <a href="#vue3" text-2xl>
+      Weekly Download Count for <span bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 bg-clip-text text-transparent>Vue3</span> Component Library
     </a>
   </div>
   <section mt-1 flex="~" justify-center>
@@ -171,9 +171,9 @@ const reactOption = ref({
       <VChart class="chart" :option="option" m-auto h-180 w-60vw />
     </figure>
   </section>
-  <div id="vue2">
-    <a href="#vue2">
-      Weekly Download Count for Vue2 Component Library
+  <div id="vue2" mt-4>
+    <a href="#vue2" text-2xl>
+      Weekly Download Count for <span bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 bg-clip-text text-transparent>Vue2</span> Component Library
     </a>
   </div>
   <section mt-1 flex="~" justify-center>
@@ -181,9 +181,9 @@ const reactOption = ref({
       <VChart class="chart" :option="vue2Option" m-auto h-180 w-60vw />
     </figure>
   </section>
-  <div id="react">
-    <a href="#react">
-      Weekly Download Count for React Component Library
+  <div id="react" mt-4>
+    <a href="#react" text-2xl>
+      Weekly Download Count for <span bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 bg-clip-text text-transparent>React</span> Component Library
     </a>
   </div>
   <section mt-1 flex="~" justify-center>
