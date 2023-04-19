@@ -42,8 +42,22 @@ async function queryReactUIComponentsLibrary() {
   return queryUIComponentsLibrary('React')
 }
 
+async function queryNotion(query: Object) {
+  switch (query.q) {
+    case 'vue3':
+      return queryVue3UIComponentsLibrary()
+    case 'vue2':
+      return queryVue2UIComponentsLibrary()
+    case 'react':
+      return queryReactUIComponentsLibrary()
+    default:
+      return queryDatabase()
+  }
+}
+
 export default defineEventHandler(async (event) => {
-  const response = await queryVue3UIComponentsLibrary()
+  const query = getQuery(event)
+  const response = await queryNotion(query)
   return {
     code: 200,
     message: 'ok',
