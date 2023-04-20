@@ -85,7 +85,7 @@ export function usePieOption(data: any, title: string) {
           fontFamily: 'sans-serif',
         },
         type: 'pie',
-        radius: '75%',
+        radius: '80%',
         data,
         emphasis: {
           itemStyle: {
