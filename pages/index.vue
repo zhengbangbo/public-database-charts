@@ -31,10 +31,40 @@ use([
 
 provide(THEME_KEY, 'light')
 
-const { data: frameworkData } = await useFetch('/api/database?tags=Framework')
-const { data: vue3Data } = await useFetch('/api/database?tags=UI&tags=Vue+3')
-const { data: vue2Data } = await useFetch('/api/database?tags=UI&tags=Vue+2')
-const { data: reactData } = await useFetch('/api/database?tags=UI&tags=React')
+async function getDatabaseData(tags: string[]) {
+  const parames = tags.map(tag => `tags=${encodeURIComponent(tag)}`).join('&')
+  const { data: databaseData } = await useFetch(`/api/database?${parames}`)
+  return databaseData
+}
+
+const init_charts = [
+  {
+    title: 'Test',
+    tags: ['Test'],
+  },
+  {
+    title: 'Framework',
+    tags: ['Framework'],
+  },
+  {
+    title: 'Vue3',
+    tags: ['UI', 'Vue 3'],
+  },
+  {
+    title: 'Vue2',
+    tags: ['UI', 'Vue 2'],
+  },
+  {
+    title: 'React',
+    tags: ['UI', 'React'],
+  },
+]
+
+const testData = await getDatabaseData(init_charts[0].tags)
+const frameworkData = await getDatabaseData(init_charts[1].tags)
+const vue3Data = await getDatabaseData(init_charts[2].tags)
+const vue2Data = await getDatabaseData(init_charts[3].tags)
+const reactData = await getDatabaseData(init_charts[4].tags)
 
 function lastEditedTime(data: any) {
   const lastEditedTime = data.value.data[0].last_edited_time
@@ -42,12 +72,18 @@ function lastEditedTime(data: any) {
   return date.toLocaleString().replace(/:\d{1,2}$/, ' ')
 }
 
+const testLastEditedTime = lastEditedTime(testData)
 const frameworkLastEditedTime = lastEditedTime(frameworkData)
 const vue3LastEditedTime = lastEditedTime(vue3Data)
 const vue2LastEditedTime = lastEditedTime(vue2Data)
 const reactLastEditedTime = lastEditedTime(reactData)
 
 const charts = [
+  {
+    title: 'Test',
+    data: testData,
+    lastEditedTime: testLastEditedTime,
+  },
   {
     title: 'Framework',
     data: frameworkData,
