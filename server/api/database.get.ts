@@ -9,55 +9,36 @@ async function queryDatabase() {
   return response
 }
 
-async function queryUIComponentsLibrary(and: string) {
+async function queryDatabaseBy(tags: string[] | string) {
+  if (!Array.isArray(tags))
+    tags = [tags]
+
   const response = await notion.databases.query({
     database_id: '75dc1174b0394f04acde30a004683f68',
     filter: {
-      and: [{
-        property: 'Tags',
-        multi_select: {
-          contains: 'UI',
-        },
-      }, {
-        property: 'Tags',
-        multi_select: {
-          contains: and,
-        },
-      }],
+      and: tags.map(
+        tag => ({
+          property: 'Tags',
+          multi_select: {
+            contains: tag,
+          },
+        }),
+      ),
     },
   })
 
   return response
 }
 
-async function queryVue3UIComponentsLibrary() {
-  return queryUIComponentsLibrary('Vue 3')
-}
-
-async function queryVue2UIComponentsLibrary() {
-  return queryUIComponentsLibrary('Vue 2')
-}
-
-async function queryReactUIComponentsLibrary() {
-  return queryUIComponentsLibrary('React')
-}
-
-async function queryNotion(query: Object) {
-  switch (query.q) {
-    case 'vue3':
-      return queryVue3UIComponentsLibrary()
-    case 'vue2':
-      return queryVue2UIComponentsLibrary()
-    case 'react':
-      return queryReactUIComponentsLibrary()
-    default:
-      return queryDatabase()
-  }
+async function queryNotion(tags: string[] | string | undefined) {
+  if (!tags)
+    return queryDatabase()
+  return queryDatabaseBy(tags)
 }
 
 export default defineEventHandler(async (event) => {
-  const query = getQuery(event)
-  const response = await queryNotion(query)
+  const { tags } = getQuery(event)
+  const response = await queryNotion(tags as string[] | string | undefined)
   return {
     code: 200,
     message: 'ok',

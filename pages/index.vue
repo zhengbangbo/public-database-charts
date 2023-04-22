@@ -31,9 +31,9 @@ use([
 
 provide(THEME_KEY, 'light')
 
-const { data: vue3Data } = await useFetch('/api/database?q=vue3')
-const { data: vue2Data } = await useFetch('/api/database?q=vue2')
-const { data: reactData } = await useFetch('/api/database?q=react')
+const { data: vue3Data } = await useFetch('/api/database?tags=UI&tags=Vue+3')
+const { data: vue2Data } = await useFetch('/api/database?tags=UI&tags=Vue+2')
+const { data: reactData } = await useFetch('/api/database?tags=UI&tags=React')
 
 function lastEditedTime(data: any) {
   const lastEditedTime = data.value.data[0].last_edited_time
