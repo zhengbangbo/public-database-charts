@@ -29,7 +29,9 @@ use([
   CanvasRenderer,
 ])
 
-provide(THEME_KEY, 'light')
+const color = useColorMode()
+
+provide(THEME_KEY, color)
 
 async function getDatabaseData(tags: string[]) {
   const parames = tags.map(tag => `tags=${encodeURIComponent(tag)}`).join('&')
