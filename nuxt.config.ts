@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     '@vite-pwa/nuxt',
+    'nuxt-gtag',
   ],
 
   experimental: {
@@ -63,5 +64,9 @@ export default defineNuxtConfig({
 
   build: {
     transpile: [/echarts/, /zrender/, /resize-detector/],
+  },
+
+  gtag: {
+    id: 'G-17C4Q3TD69',
   },
 })
