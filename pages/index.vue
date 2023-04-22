@@ -31,6 +31,7 @@ use([
 
 provide(THEME_KEY, 'light')
 
+const { data: frameworkData } = await useFetch('/api/database?tags=Framework')
 const { data: vue3Data } = await useFetch('/api/database?tags=UI&tags=Vue+3')
 const { data: vue2Data } = await useFetch('/api/database?tags=UI&tags=Vue+2')
 const { data: reactData } = await useFetch('/api/database?tags=UI&tags=React')
@@ -41,11 +42,17 @@ function lastEditedTime(data: any) {
   return date.toLocaleString().replace(/:\d{1,2}$/, ' ')
 }
 
+const frameworkLastEditedTime = lastEditedTime(frameworkData)
 const vue3LastEditedTime = lastEditedTime(vue3Data)
 const vue2LastEditedTime = lastEditedTime(vue2Data)
 const reactLastEditedTime = lastEditedTime(reactData)
 
 const charts = [
+  {
+    title: 'Framework',
+    data: frameworkData,
+    lastEditedTime: frameworkLastEditedTime,
+  },
   {
     title: 'Vue3',
     data: vue3Data,
@@ -75,7 +82,7 @@ const charts = [
   <ChartsContainer v-for="chart in charts" :key="chart.title" :data="chart.data">
     <template #title>
       <div id="vue3" m-4 text-2xl>
-        Weekly Download Count for <span from-rose-400 to-indigo-500 via-fuchsia-500 bg-gradient-to-r bg-clip-text text-transparent>{{ chart.title }}</span> Component Library
+        <span from-rose-400 to-indigo-500 via-fuchsia-500 bg-gradient-to-r bg-clip-text text-transparent>{{ chart.title }}</span> weekly downloads
       </div>
     </template>
     <template #last-edited-time>

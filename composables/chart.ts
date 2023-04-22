@@ -1,7 +1,7 @@
 export function useSource(data: any) {
   return data.value.data.map((item: any) => {
     return {
-      package: item.properties?.Name.title[0].plain_text,
+      package: item.properties?.Name.title[0].plain_text || item.properties?.Name.title[1].plain_text,
       npm: item.properties['Npm Weekly Downloads'].number,
       mirror: item.properties['NpmMirror Weekly Downloads'].number,
     }
@@ -13,7 +13,7 @@ export function useNpmData(data: any) {
   return data.value.data.map((item: any) => {
     return {
       value: item.properties['Npm Weekly Downloads'].number,
-      name: item.properties?.Name.title[0].plain_text,
+      name: item.properties?.Name.title[0].plain_text || item.properties?.Name.title[1].plain_text,
     }
   }).sort((a: any, b: any) => b.value - a.value)
 }
@@ -22,7 +22,7 @@ export function useMirrorData(data: any) {
   return data.value.data.map((item: any) => {
     return {
       value: item.properties['NpmMirror Weekly Downloads'].number,
-      name: item.properties?.Name.title[0].plain_text,
+      name: item.properties?.Name.title[0].plain_text || item.properties?.Name.title[1].plain_text,
     }
   }).sort((a: any, b: any) => b.value - a.value)
 }
