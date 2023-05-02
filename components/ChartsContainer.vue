@@ -23,8 +23,8 @@ const type = ref('bar')
           Pie
         </button>
       </div>
-      <VChart v-show="type === 'bar'" class="chart" :option="option" autoresize m-auto h-160 w-full />
-      <div v-show="type === 'pie'" flex="~ col" sm="flex-row" h-160 w-full>
+      <VChart v-if="type === 'bar'" class="chart" :option="option" autoresize m-auto h-160 w-full />
+      <div v-else flex="~ col" sm="flex-row" h-160 w-full>
         <VChart class="chart" :option="option1" autoresize m-auto />
         <VChart class="chart" :option="option2" autoresize m-auto />
       </div>
