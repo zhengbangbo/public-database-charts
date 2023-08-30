@@ -45,7 +45,7 @@ const init_charts = [
     tags: ['Test'],
   },
   {
-    title: 'Framework',
+    title: 'UI Framework',
     tags: ['Framework'],
   },
   {
@@ -60,6 +60,10 @@ const init_charts = [
     title: 'React',
     tags: ['UI', 'React'],
   },
+  {
+    title: 'Node.js',
+    tags: ['Node.js'],
+  },
 ]
 
 const testData = await getDatabaseData(init_charts[0].tags)
@@ -67,6 +71,7 @@ const frameworkData = await getDatabaseData(init_charts[1].tags)
 const vue3Data = await getDatabaseData(init_charts[2].tags)
 const vue2Data = await getDatabaseData(init_charts[3].tags)
 const reactData = await getDatabaseData(init_charts[4].tags)
+const nodejsData = await getDatabaseData(init_charts[5].tags)
 
 function lastEditedTime(data: any) {
   const lastEditedTime = data.value.data[0].last_edited_time
@@ -79,6 +84,7 @@ const frameworkLastEditedTime = lastEditedTime(frameworkData)
 const vue3LastEditedTime = lastEditedTime(vue3Data)
 const vue2LastEditedTime = lastEditedTime(vue2Data)
 const reactLastEditedTime = lastEditedTime(reactData)
+const nodejsLastEditedTime = lastEditedTime(nodejsData)
 
 const charts = [
   {
@@ -105,6 +111,11 @@ const charts = [
     title: 'React',
     data: reactData,
     lastEditedTime: reactLastEditedTime,
+  },
+  {
+    title: 'Node.js',
+    data: nodejsData,
+    lastEditedTime: nodejsLastEditedTime,
   },
 ]
 </script>
